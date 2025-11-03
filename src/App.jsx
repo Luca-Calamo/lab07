@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Book from './Book';
+import BookDetails from './BookDetails';
 import Header from './Header';
 import New from './New';
 import Footer from './Footer';
@@ -20,6 +21,7 @@ function App() {
     });
 
     const [selectedBookId, setSelectedBookId] = useState(null);
+    const [viewingBookDetails, setViewingBookDetails] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const [filterLanguage, setFilterLanguage] = useState('all');
     const [showLoanManager, setShowLoanManager] = useState(false);
@@ -233,6 +235,9 @@ function App() {
                                             onSelect={() =>
                                                 handleBookSelect(book.isbn13)
                                             }
+                                            onViewDetails={() =>
+                                                setViewingBookDetails(book)
+                                            }
                                         />
                                     );
                                 })}
@@ -241,6 +246,12 @@ function App() {
                 )}
             </div>
             <Footer text='Luca Calamo 2025' />
+            {viewingBookDetails && (
+                <BookDetails
+                    book={viewingBookDetails}
+                    onClose={() => setViewingBookDetails(null)}
+                />
+            )}
         </div>
     );
 }
